@@ -1,0 +1,38 @@
+\documentclass[utf8]{article}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{mathtools}
+\usepackage{perspectivetext}
+
+\begin{document}
+	Code:
+	
+	\lstinputlisting[language=TeX]{perspectivetext.tex}
+	
+	Result:
+	
+	\begin{tikzpicture}[line join=round]
+		\begin{scope}[
+		view={85}{-40},
+		perspective={
+			p = {(30,0,5.5)},
+			q = {(0,10,55)},
+			r = {(0,20,5.5)},}
+		]
+		
+		\begin{scope}[
+		grid source opposite corners={(0cm,0cm) and (15cm,10cm)},
+		grid target corners={(tpp cs:0,0,0)--(tpp cs:15,0,0)--(tpp cs:15,0,10)--(tpp cs:0,0,10)}
+		]
+		\pgftransformnonlinear\tikzgridtransform
+		
+		\foreach \char [count=\i from -2] in {O,M,E,A,G,M,E,A,G,M,E,A,G,M,E,A,G,M,E,A,G,M,E,A,G,M,E,A,G,M,E,A,G,M,E,A,G}{
+			\pgftransformshift{\pgfpointadd{\pgfpoint{7.5cm}{5cm}}{\pgfpoint{\i *0.6cm}{0cm}}}
+			\pgftransformscale{2}
+			\pgfnode{rectangle}{center}{\char}{}{}
+		}
+		\end{scope}
+		\end{scope}
+	\end{tikzpicture}
+\end{document}
